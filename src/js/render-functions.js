@@ -52,7 +52,7 @@ export async function renderImages(images, page) {
             hideLoaderButton();
             iziToast.warning({
                 title: "Warning",
-                message: "There are fewer than 15 images available.",
+                message: "We're sorry, but you've reached the end of search results.",
                 position: "topRight"
             });
         }
