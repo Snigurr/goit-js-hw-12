@@ -75,6 +75,33 @@
   outline: none;
 }
 
+.add_img_btn {
+  display: none;
+}
+
+.add_img_btn{
+  border-radius: 8px;
+  padding: 8px 16px;
+  height: 40px;
+  background: #4e75ff;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 50px;
+  margin-top: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.add_img_btn:hover{
+  background: #6c8cff;
+}
+
 .gallery{
   display: flex;
   flex-wrap: wrap;

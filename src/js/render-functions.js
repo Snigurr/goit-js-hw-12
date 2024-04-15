@@ -1,35 +1,38 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+
 let lightbox; 
 
 function preloadImages(images) {
     return new Promise((resolve, reject) => {
-        const imagePromises = images.map(image => {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.onload = resolve;
-                img.onerror = reject;
-                img.src = image.largeImageURL;
-            });
+    const imagePromises = images.map(image => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = error => reject(error);
+            img.src = image.largeImageURL;
         });
-
-        Promise.all(imagePromises)
-            .then(resolve)
-            .catch(reject);
     });
+
+    Promise.all(imagePromises)
+        .then(() => resolve())
+        .catch(error => reject(error));
+});
+
 }
 
 export function renderImages(images) {
     showLoader();
-    clearImages()
-        .then(() => preloadImages(images))
+    preloadImages(images)
         .then(() => {
             const list = document.querySelector("ul");
+            
             if (!list) {
                 throw new Error("List element not found");
             }
             list.insertAdjacentHTML("beforeend", createMarkup(images));
+            
             if (!lightbox) {
                 lightbox = new SimpleLightbox("ul a", {
                     captionsData: "alt",
@@ -40,11 +43,14 @@ export function renderImages(images) {
             }
 
             hideLoader();
+            
         })
         .catch(error => {
             console.error("Error while preloading images:", error);
         });
 }
+
+
 
 export function clearImages() {
     return new Promise(resolve => {
@@ -72,6 +78,7 @@ function createMarkup(arr) {
             </li>
         `)
         .join("");
+    
 }
 
 export function showLoader() {
@@ -81,9 +88,24 @@ export function showLoader() {
     }
 }
 
-function hideLoader() {
+export function hideLoader() {
     const loader = document.querySelector(".loader");
     if (loader) {
         loader.style.display = "none";
     }
 }
+
+export function moveLoaderBelowButton(button) {
+    const loader = document.querySelector(".loader");
+    loader.style.position = "absolute";
+    loader.style.top = button.offsetTop + button.offsetHeight + "px";
+    loader.style.left = button.offsetLeft + "px";
+}
+
+export function moveLoaderBelowInput(input) {
+    const loader = document.querySelector(".loader");
+    loader.style.position = "absolute";
+    loader.style.top = input.offsetTop + input.offsetHeight + "px";
+    loader.style.left = input.offsetLeft + "px";
+}
+
