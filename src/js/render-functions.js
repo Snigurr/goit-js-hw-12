@@ -88,12 +88,13 @@ import SimpleLightbox from "simplelightbox";
                 <li>
                     <a href="${largeImageURL}" alt="${tags}">
                         <img src="${webformatURL}" alt="${tags}" width="360" />
-                        <p class="image-info">
-                            <span>Likes<br> ${likes}</span>
-                            <span>Views<br> ${views}</span>
-                            <span>Comments<br> ${comments}</span>
-                            <span>Downloads<br> ${downloads}</span>
-                        </p>
+                        <div class="image-info">
+    <p><span class="info-label">Likes</span><br>${likes}</p>
+    <p><span class="info-label">Views</span><br>${views}</p>
+    <p><span class="info-label">Comments</span><br>${comments}</p>
+    <p><span class="info-label">Downloads</span><br>${downloads}</p>
+</div>
+
                     </a>
                 </li>
             `)
